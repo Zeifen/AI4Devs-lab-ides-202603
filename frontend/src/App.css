@@ -1,38 +1,100 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-shell {
+  background: #f6f8fb;
+  color: #101828;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+}
+
+.dashboard-header {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: #ffffff;
+  border-bottom: 1px solid #e4e7ec;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 28px clamp(20px, 5vw, 64px);
 }
 
-.App-link {
-  color: #61dafb;
+.dashboard-eyebrow {
+  color: #2563eb;
+  font-size: 0.86rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-transform: uppercase;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.dashboard-header h1,
+.section-heading h2,
+.summary-panel h2 {
+  margin: 0;
+}
+
+.dashboard-header h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.primary-action {
+  background: #2563eb;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 1rem;
+  font-weight: 800;
+  min-height: 44px;
+  padding: 0 18px;
+}
+
+.primary-action:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.24);
+  outline: none;
+}
+
+.dashboard-main {
+  display: grid;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: 28px 20px 48px;
+}
+
+.summary-panel,
+.form-panel {
+  background: #ffffff;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.summary-panel p,
+.section-heading p {
+  color: #475467;
+  line-height: 1.6;
+  margin: 10px 0 0;
+}
+
+.section-heading {
+  margin-bottom: 22px;
+}
+
+.section-heading h2,
+.summary-panel h2 {
+  font-size: 1.45rem;
+}
+
+@media (max-width: 720px) {
+  .dashboard-header {
+    align-items: stretch;
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .primary-action {
+    width: 100%;
+  }
+
+  .summary-panel,
+  .form-panel {
+    padding: 18px;
   }
 }

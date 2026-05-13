@@ -15,6 +15,51 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script>
+      (function () {
+        var resizeObserverLoopMessages = [
+          'ResizeObserver loop completed with undelivered notifications.',
+          'ResizeObserver loop limit exceeded',
+        ];
+
+        function isResizeObserverLoopMessage(message) {
+          return typeof message === 'string' && resizeObserverLoopMessages.indexOf(message) !== -1;
+        }
+
+        var originalAddEventListener = window.addEventListener;
+        window.addEventListener = function (type, listener, options) {
+          if ((type === 'error' || type === 'unhandledrejection') && listener) {
+            var wrappedListener = function (event) {
+              var message = type === 'error' ? event.message : event.reason && (event.reason.message || event.reason);
+
+              if (isResizeObserverLoopMessage(message)) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                return;
+              }
+
+              if (typeof listener === 'function') {
+                return listener.call(this, event);
+              }
+
+              if (listener && typeof listener.handleEvent === 'function') {
+                return listener.handleEvent(event);
+              }
+            };
+
+            return originalAddEventListener.call(this, type, wrappedListener, options);
+          }
+
+          return originalAddEventListener.call(this, type, listener, options);
+        };
+
+        window.onerror = function (message) {
+          if (isResizeObserverLoopMessage(message)) {
+            return true;
+          }
+        };
+      })();
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
